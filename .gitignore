@@ -45,3 +45,14 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/ui_mainwindow.h
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/Makefile.Debug
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/BikeData.exe
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/Makefile.Release
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/main.o
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/mainwindow.o
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/moc_mainwindow.cpp
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/moc_mainwindow.o
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/rider.o
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/tour.o
+build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/Makefile
