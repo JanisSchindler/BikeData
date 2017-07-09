@@ -13,20 +13,20 @@ public:
   Rider();
   ~Rider();
 
-  void SetFirstName(QString name);
-  QString GetFirstName();
-  void SetLastName(QString name);
-  QString GetLastName();
-  void SetBirthdate(QDate date);
-  QDate GetBirthdate();
-  unsigned int GetAge();
+  void SetFirstName(const QString name);
+  QString GetFirstName() const;
+  void SetLastName(const QString name);
+  QString GetLastName() const;
+  void SetBirthdate(const QDate date);
+  QDate GetBirthdate() const;
+  unsigned int GetAge() const;
 
   // IModelElement
-  QUuid GetId();
+  QUuid GetId() const;
 
   // IPersistence
-  void LoadFromXML(QDomElement * element);
-  QDomElement* WriteToXML();
+  void LoadFromXML(const QDomNode node);
+  QDomElement* WriteToXML()const;
 
 private:
   QString mFirstName;

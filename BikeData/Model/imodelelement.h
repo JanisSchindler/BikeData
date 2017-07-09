@@ -6,7 +6,7 @@
 class IModelElement
 {
 public:
-  virtual QUuid GetId() = 0;
+  virtual QUuid GetId() const = 0;
   virtual ~IModelElement(){}
 };
 

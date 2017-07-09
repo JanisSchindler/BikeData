@@ -15,12 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     Model/rider.cpp \
-    Model/tour.cpp
+    Model/tour.cpp \
+    Model/manager.cpp
 
 HEADERS  += mainwindow.h \
     Model/tour.h \
     Model/rider.h \
     Model/ipersistence.h \
-    Model/imodelelement.h
+    Model/imodelelement.h \
+    Model/manager.h
 
 FORMS    += mainwindow.ui
