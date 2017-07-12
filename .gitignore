@@ -58,3 +58,4 @@ build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/debug/tour.o
 build-BikeData-Desktop_Qt_5_5_1_MinGW_32bit-Debug/Makefile
 BikeData/BikeData.pro.user
 *.o
+*.user

@@ -1,9 +1,6 @@
 #include "tour.h"
 
-Tour::Tour()
-{
-  mID = QUuid::createUuid();
-}
+Tour::Tour(){}
 
 Tour::~Tour(){}
 
@@ -61,11 +58,6 @@ float Tour::GetAverageRaise() const
   return mLength * 1000 / mHeight * 100;
 }
 
-QUuid Tour::GetId() const
-{
-  return mID;
-}
-
 void Tour::LoadFromXML(const QDomNode node)
 {
   QDomElement element = node.toElement();
@@ -76,7 +68,7 @@ void Tour::LoadFromXML(const QDomNode node)
   QDomNode xNode = element.elementsByTagName(QString("ID")).item(0);
   if (!xNode.isNull())
   {
-    mID = QUuid(xNode.nodeValue());
+    mId = QUuid(xNode.nodeValue());
   }
   xNode = element.elementsByTagName(QString("Length")).item(0);
   if (!xNode.isNull())
@@ -104,7 +96,7 @@ QDomElement* Tour::WriteToXML() const
 {
   QDomElement* xID = new QDomElement();
   xID->setTagName(QString("ID"));
-  xID->setNodeValue(mID.toString());
+  xID->setNodeValue(mId.toString());
 
   QDomElement* xLen = new QDomElement();
   xLen->setTagName(QString("Length"));

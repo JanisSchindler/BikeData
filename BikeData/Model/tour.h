@@ -33,14 +33,11 @@ public:
   float GetAverageSpeed() const;
   float GetAverageRaise() const;
 
-  // IModelElement
-  QUuid GetId() const;
   // IPersistence
   void LoadFromXML(const QDomNode node);
   QDomElement* WriteToXML() const;
 
 private:
-  QUuid mID;
   float mLength;
   float mHeight;
   QDate mDate;

@@ -1,9 +1,6 @@
 #include "rider.h"
 
-Rider::Rider()
-{
-  mID = QUuid::createUuid();
-}
+Rider::Rider(){}
 
 Rider::~Rider(){}
 
@@ -49,11 +46,6 @@ unsigned int Rider::GetAge() const
   return years;
 }
 
-QUuid Rider::GetId() const
-{
-  return mID;
-}
-
 void Rider::LoadFromXML(const QDomNode node)
 {
   QDomElement element = node.toElement();
@@ -64,7 +56,7 @@ void Rider::LoadFromXML(const QDomNode node)
   QDomNode xNode = element.elementsByTagName(QString("ID")).item(0);
   if (!xNode.isNull())
   {
-    mID = QUuid(xNode.nodeValue());
+    mId = QUuid(xNode.nodeValue());
   }
   xNode = element.elementsByTagName(QString("FirstName")).item(0);
   if (!xNode.isNull())
@@ -87,7 +79,7 @@ QDomElement* Rider::WriteToXML() const
 {
   QDomElement* xID = new QDomElement();
   xID->setTagName(QString("ID"));
-  xID->setNodeValue(mID.toString());
+  xID->setNodeValue(mId.toString());
 
   QDomElement* xFirstName = new QDomElement();
   xFirstName->setTagName(QString("FirstName"));

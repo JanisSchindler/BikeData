@@ -16,7 +16,8 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     Model/rider.cpp \
     Model/tour.cpp \
-    Model/manager.cpp
+    Model/manager.cpp \
+    Model/imodelelement.cpp
 
 HEADERS  += mainwindow.h \
     Model/tour.h \

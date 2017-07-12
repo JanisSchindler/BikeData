@@ -21,9 +21,6 @@ public:
   QDate GetBirthdate() const;
   unsigned int GetAge() const;
 
-  // IModelElement
-  QUuid GetId() const;
-
   // IPersistence
   void LoadFromXML(const QDomNode node);
   QDomElement* WriteToXML()const;
@@ -32,7 +29,6 @@ private:
   QString mFirstName;
   QString mLastName;
   QDate mBirthdate;
-  QUuid mID;
 };
 
 #endif // RIDER_H

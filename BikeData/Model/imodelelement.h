@@ -6,8 +6,12 @@
 class IModelElement
 {
 public:
-  virtual QUuid GetId() const = 0;
+  IModelElement();
+  QUuid GetId() const;
   virtual ~IModelElement(){}
+
+protected:
+  QUuid mId;
 };
 
 
