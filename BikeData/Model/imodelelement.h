@@ -7,7 +7,7 @@ class IModelElement
 {
 public:
   IModelElement();
-  QUuid GetId() const;
+  QUuid getId() const;
   virtual ~IModelElement(){}
 
 protected:

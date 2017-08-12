@@ -16,28 +16,32 @@ public:
   Tour();
   ~Tour();
 
+  void setTitle(const QString title);
+  QString getTitle() const;
+
   // km
-  void SetLength(const float length);
-  float GetLength() const;
+  void setLength(const float length);
+  float getLength() const;
   // m
-  void SetHeight(const float height);
-  float GetHeight() const;
+  void setHeight(const float height);
+  float getHeight() const;
 
-  void SetDate(const QDate date);
-  QDate GetDate() const;
+  void setDate(const QDate date);
+  QDate getDate() const;
 
-  void SetDuration(const QTime duration);
-  QTime GetDuration() const;
+  void setDuration(const QTime duration);
+  QTime getDuration() const;
 
   // calculated properties
-  float GetAverageSpeed() const;
-  float GetAverageRaise() const;
+  float getAverageSpeed() const;
+  float getAverageRaise() const;
 
   // IPersistence
-  void LoadFromXML(const QDomNode node);
-  QDomElement* WriteToXML() const;
+  void loadFromXML(const QDomNode node);
+  QDomElement* writeToXML() const;
 
 private:
+  QString mTitle;
   float mLength;
   float mHeight;
   QDate mDate;

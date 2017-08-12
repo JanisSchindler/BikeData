@@ -13,17 +13,17 @@ public:
   Rider();
   ~Rider();
 
-  void SetFirstName(const QString name);
-  QString GetFirstName() const;
-  void SetLastName(const QString name);
-  QString GetLastName() const;
-  void SetBirthdate(const QDate date);
-  QDate GetBirthdate() const;
-  unsigned int GetAge() const;
+  void setFirstName(const QString name);
+  QString getFirstName() const;
+  void setLastName(const QString name);
+  QString getLastName() const;
+  void setBirthdate(const QDate date);
+  QDate getBirthdate() const;
+  unsigned int getAge() const;
 
   // IPersistence
-  void LoadFromXML(const QDomNode node);
-  QDomElement* WriteToXML()const;
+  void loadFromXML(const QDomNode node);
+  QDomElement* writeToXML()const;
 
 private:
   QString mFirstName;

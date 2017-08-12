@@ -4,38 +4,42 @@ Rider::Rider(){}
 
 Rider::~Rider(){}
 
-void Rider::SetFirstName(const QString name)
+void Rider::setFirstName(const QString name)
 {
   mFirstName = name;
 }
 
-QString Rider::GetFirstName() const
+QString Rider::getFirstName() const
 {
   return mFirstName;
 }
 
-void Rider::SetLastName(const QString name)
+void Rider::setLastName(const QString name)
 {
   mLastName = name;
 }
 
-QString Rider::GetLastName() const
+QString Rider::getLastName() const
 {
   return mLastName;
 }
 
-void Rider::SetBirthdate(const QDate date)
+void Rider::setBirthdate(const QDate date)
 {
   mBirthdate = date;
 }
 
-QDate Rider::GetBirthdate() const
+QDate Rider::getBirthdate() const
 {
   return mBirthdate;
 }
 
-unsigned int Rider::GetAge() const
+unsigned int Rider::getAge() const
 {
+  if (!mBirthdate.isValid())
+  {
+    return 0;
+  }
   QDate current = QDate::currentDate();
   int years = current.year() - mBirthdate.year();
   if (current.month() < mBirthdate.month() ||
@@ -46,7 +50,7 @@ unsigned int Rider::GetAge() const
   return years;
 }
 
-void Rider::LoadFromXML(const QDomNode node)
+void Rider::loadFromXML(const QDomNode node)
 {
   QDomElement element = node.toElement();
   if (element.isNull())
@@ -75,7 +79,7 @@ void Rider::LoadFromXML(const QDomNode node)
   }
 }
 
-QDomElement* Rider::WriteToXML() const
+QDomElement* Rider::writeToXML() const
 {
   QDomElement* xID = new QDomElement();
   xID->setTagName(QString("ID"));

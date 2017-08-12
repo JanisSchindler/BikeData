@@ -5,7 +5,7 @@ IModelElement::IModelElement()
   mId = QUuid::createUuid();
 }
 
-QUuid IModelElement::GetId() const
+QUuid IModelElement::getId() const
 {
   return mId;
 }

@@ -6,8 +6,8 @@
 class IPersistence
 {
 public:
-  virtual void LoadFromXML(QDomNode node) = 0;
-  virtual QDomElement* WriteToXML() const  = 0 ;
+  virtual void loadFromXML(QDomNode node) = 0;
+  virtual QDomElement* writeToXML() const  = 0 ;
   virtual ~IPersistence(){}
 };
 

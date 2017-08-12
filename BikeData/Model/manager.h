@@ -15,26 +15,30 @@ class Manager
 {
 public:
 
-  Manager();
+  Manager(const QString path);
   ~Manager();
 
   // main entry point to save and load a file
-  void Save(const QString fileName) const;
-  void Load(const QString fileName);
+  void save() const;
+  void load();
   // these create new lists -> delete after use
-  std::vector<const Rider*>* GetRidersForTour(const Tour* tour) const;
-  std::vector<const Tour*>* GetToursForRider(const Rider* rider) const;
+  std::vector<const Rider*>* getRidersForTour(const Tour* tour) const;
+  std::vector<const Tour*>* getToursForRider(const Rider* rider) const;
+
+  std::vector<const Tour*>* getTours() const;
+  std::vector<const Rider*>* getRiders() const;
 
 private:
+  QString mPath;
   std::map<const Tour*, std::vector<const Rider*>*> mMapTours2Riders;
   std::vector<const Rider*>* mRiders;
   std::vector<const Tour*>* mTours;
 
-  const Rider* GetRiderById(QUuid id) const;
-  const Tour* GetTourById(QUuid id) const;
+  const Rider* getRiderById(QUuid id) const;
+  const Tour* getTourById(QUuid id) const;
 
-  QDomElement* WriteMap() const;
-  void ReadMap(const QDomNode map);
+  QDomElement* writeMap() const;
+  void readMap(const QDomNode map);
 };
 
 #endif // MANAGER_H

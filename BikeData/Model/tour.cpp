@@ -4,61 +4,80 @@ Tour::Tour(){}
 
 Tour::~Tour(){}
 
-void Tour::SetLength(const float len)
+void Tour::setTitle(const QString title)
+{
+  mTitle = title;
+}
+
+QString Tour::getTitle() const
+{
+  return mTitle;
+}
+
+void Tour::setLength(const float len)
 {
   mLength = len;
 }
 
-float Tour::GetLength() const
+float Tour::getLength() const
 {
   return mLength;
 }
 
-void Tour::SetHeight(const float height)
+void Tour::setHeight(const float height)
 {
   mHeight = height;
 }
 
-float Tour::GetHeight() const
+float Tour::getHeight() const
 {
   return mHeight;
 }
 
-void Tour::SetDate(const QDate date)
+void Tour::setDate(const QDate date)
 {
   mDate = date;
 }
 
-QDate Tour::GetDate() const
+QDate Tour::getDate() const
 {
   return mDate;
 }
 
-void Tour::SetDuration(const QTime duration)
+void Tour::setDuration(const QTime duration)
 {
   mDuration = duration;
 }
 
-QTime Tour::GetDuration() const
+QTime Tour::getDuration() const
 {
   return mDuration;
 }
 
-float Tour::GetAverageSpeed() const
+float Tour::getAverageSpeed() const
 {
+  if (!mDuration.isValid())
+  {
+    return 0.0;
+  }
   int durMs = mDuration.elapsed();
   // return in km / h
   return mLength / (durMs / 1000.0 / 3600);
+
 }
 
-float Tour::GetAverageRaise() const
+float Tour::getAverageRaise() const
 {
+  if (mHeight < 0.0001)
+  {
+    return 0.0;
+  }
   // return in %
   // 100 % == same distance up as forward
   return mLength * 1000 / mHeight * 100;
 }
 
-void Tour::LoadFromXML(const QDomNode node)
+void Tour::loadFromXML(const QDomNode node)
 {
   QDomElement element = node.toElement();
   if (element.isNull())
@@ -69,6 +88,11 @@ void Tour::LoadFromXML(const QDomNode node)
   if (!xNode.isNull())
   {
     mId = QUuid(xNode.nodeValue());
+  }
+  xNode = element.elementsByTagName(QString("Title")).item(0);
+  if (!xNode.isNull())
+  {
+    mTitle = xNode.nodeValue();
   }
   xNode = element.elementsByTagName(QString("Length")).item(0);
   if (!xNode.isNull())
@@ -92,11 +116,15 @@ void Tour::LoadFromXML(const QDomNode node)
   }
 }
 
-QDomElement* Tour::WriteToXML() const
+QDomElement* Tour::writeToXML() const
 {
   QDomElement* xID = new QDomElement();
   xID->setTagName(QString("ID"));
   xID->setNodeValue(mId.toString());
+
+  QDomElement* xTitle = new QDomElement();
+  xTitle->setTagName(QString("Title"));
+  xTitle->setNodeValue(mTitle);
 
   QDomElement* xLen = new QDomElement();
   xLen->setTagName(QString("Length"));

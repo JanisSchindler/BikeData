@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Tours</class>
+ <widget class="QWidget" name="Tours">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>854</width>
+    <height>597</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QListWidget" name="mListTours"/>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="mGrpData">
+     <property name="title">
+      <string>Daten</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <widget class="QLabel" name="mLabelHeight">
+        <property name="text">
+         <string>Höhenmeter</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="mLabelLen">
+        <property name="text">
+         <string>Distanz</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="mTxtBoxDistance"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="mLabelDate">
+        <property name="text">
+         <string>Datum</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="mLabelDur">
+        <property name="text">
+         <string>Dauer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QTimeEdit" name="mTimeEditDur"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QDateEdit" name="mDateEditDate"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="mTxtBoxHeight"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="mLabelTitle">
+        <property name="text">
+         <string>Titel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="mTxtBoxTitle"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="mLaveAverage">
+        <property name="text">
+         <string>Durchschnitt</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="mTxtBoxSpeed">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="mLabelSpeed">
+        <property name="text">
+         <string>Geschwindigkeit</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="mLabelRaise">
+        <property name="text">
+         <string>Steigung</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="mTxtBoxRaise">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="mGrpRiders">
+     <property name="title">
+      <string>Mitfahrer</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QWidget" name="mWidgetButtons" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>633</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mBtnOk">
+           <property name="text">
+            <string>Ok</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mBtnCancel">
+           <property name="text">
+            <string>Abbrechen</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QListWidget" name="mListRiders"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

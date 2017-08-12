@@ -17,13 +17,19 @@ SOURCES += main.cpp\
     Model/rider.cpp \
     Model/tour.cpp \
     Model/manager.cpp \
-    Model/imodelelement.cpp
+    Model/imodelelement.cpp \
+    UI/riders.cpp \
+    UI/tours.cpp
 
 HEADERS  += mainwindow.h \
     Model/tour.h \
     Model/rider.h \
     Model/ipersistence.h \
     Model/imodelelement.h \
-    Model/manager.h
+    Model/manager.h \
+    UI/riders.h \
+    UI/tours.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    riders.ui \
+    tours.ui

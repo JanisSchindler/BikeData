@@ -1,7 +1,8 @@
 #include "manager.h"
 
-Manager::Manager()
+Manager::Manager(const QString path)
 {
+  mPath = path;
   mRiders = new std::vector<const Rider*>();
   mTours = new std::vector<const Tour*>();
 }
@@ -20,7 +21,7 @@ Manager::~Manager()
   delete mTours;
 }
 
-void Manager::Save(const QString fileName) const
+void Manager::save() const
 {
   QDomDocument doc("data");
   QDomElement* riders = new QDomElement();
@@ -28,24 +29,25 @@ void Manager::Save(const QString fileName) const
   for(std::vector<const Rider*>::const_iterator it = mRiders->begin(); it != mRiders->end(); ++it)
   {
     // (*it) is of type Rider*
-    riders->appendChild(*(*it)->WriteToXML());
+    riders->appendChild(*(*it)->writeToXML());
   }
+
 
   QDomElement* tours = new QDomElement();
   tours->setTagName(QString("Tours"));
   for(std::vector<const Tour*>::const_iterator it = mTours->begin(); it != mTours->end(); ++it)
   {
-    tours->appendChild(*(*it)->WriteToXML());
+    tours->appendChild(*(*it)->writeToXML());
   }
 
-  QDomElement* root = new QDomElement();
-  root->setTagName(QString("Data"));
-  root->appendChild(*riders);
-  root->appendChild(*tours);
-  root->appendChild(*WriteMap());
+  QDomElement root = doc.createElement(QString("Data"));
+  root.setTagName(QString("Data"));
+  root.appendChild(*riders);
+  root.appendChild(*tours);
+  root.appendChild(*writeMap());
 
-  doc.appendChild(*root);
-  QFile file(fileName);
+  doc.appendChild(root);
+  QFile file(mPath);
   if (!file.open(QIODevice::WriteOnly))
   {
     return;
@@ -55,10 +57,10 @@ void Manager::Save(const QString fileName) const
   file.close();
 }
 
-void Manager::Load(const QString fileName)
+void Manager::load()
 {
   QDomDocument doc("data");
-  QFile file(fileName);
+  QFile file(mPath);
   if (!file.open(QIODevice::ReadOnly))
   {
     return;
@@ -77,7 +79,7 @@ void Manager::Load(const QString fileName)
   for (int i = 0; i < cnt; ++i)
   {
     Rider* rider = new Rider();
-    rider->LoadFromXML(riders.item(i));
+    rider->loadFromXML(riders.item(i));
     mRiders->push_back(rider);
   }
   QDomNodeList tours = root.elementsByTagName(QString("Tours"));
@@ -85,15 +87,15 @@ void Manager::Load(const QString fileName)
   for(int i = 0; i < cnt; ++i)
   {
     Tour* tour = new Tour();
-    tour->LoadFromXML(tours.item(i));
+    tour->loadFromXML(tours.item(i));
     mTours->push_back(tour);
   }
 
   QDomNode map = root.elementsByTagName(QString("TourData")).item(0);
-  ReadMap(map);
+  readMap(map);
 }
 
-std::vector<const Rider*>* Manager::GetRidersForTour(const Tour* tour) const
+std::vector<const Rider*>* Manager::getRidersForTour(const Tour* tour) const
 {
   std::vector<const Rider*>* list = new std::vector<const Rider*>();
   std::vector<const Rider*>* fromMap = mMapTours2Riders.at(tour);
@@ -104,7 +106,7 @@ std::vector<const Rider*>* Manager::GetRidersForTour(const Tour* tour) const
   return list;
 }
 
-std::vector<const Tour*>* Manager::GetToursForRider(const Rider* rider) const
+std::vector<const Tour*>* Manager::getToursForRider(const Rider* rider) const
 {
  std::vector<const Tour*>* list = new std::vector<const Tour*>();
 
@@ -113,7 +115,7 @@ std::vector<const Tour*>* Manager::GetToursForRider(const Rider* rider) const
  {
    for(std::vector<const Rider*>::const_iterator it2 = it->second->begin(); it2 != it->second->end(); ++it2)
    {
-     if ((*it2)->GetId() == rider->GetId())
+     if ((*it2)->getId() == rider->getId())
      {
        list->push_back(it->first);
        break;
@@ -123,11 +125,11 @@ std::vector<const Tour*>* Manager::GetToursForRider(const Rider* rider) const
  return list;
 }
 
-const Rider* Manager::GetRiderById(QUuid id) const
+const Rider* Manager::getRiderById(QUuid id) const
 {
   for(std::vector<const Rider*>::const_iterator it = mRiders->begin(); it != mRiders->end(); ++it)
   {
-    if ( (*it)->GetId() == id)
+    if ( (*it)->getId() == id)
     {
       return *it;
     }
@@ -135,11 +137,21 @@ const Rider* Manager::GetRiderById(QUuid id) const
   return NULL;
 }
 
-const Tour* Manager::GetTourById(QUuid id) const
+std::vector<const Tour*>* Manager::getTours() const
+{
+  return mTours;
+}
+
+std::vector<const Rider*>* Manager::getRiders() const
+{
+  return mRiders;
+}
+
+const Tour* Manager::getTourById(QUuid id) const
 {
   for(std::vector<const Tour*>::const_iterator it = mTours->begin(); it != mTours->end(); ++it)
   {
-    if ( (*it)->GetId() == id)
+    if ( (*it)->getId() == id)
     {
       return *it;
     }
@@ -148,7 +160,7 @@ const Tour* Manager::GetTourById(QUuid id) const
 }
 
 // save in the form of Tour --> Riders (ids only)
-QDomElement* Manager::WriteMap() const
+QDomElement* Manager::writeMap() const
 {
   QDomElement* map = new QDomElement();
   map->setTagName("TourData");
@@ -157,12 +169,12 @@ QDomElement* Manager::WriteMap() const
   {
     QDomElement* tour = new QDomElement();
     tour->setTagName(QString("Tour"));
-    tour->setAttribute(QString("id"), it->first->GetId().toString());
+    tour->setAttribute(QString("id"), it->first->getId().toString());
     for(std::vector<const Rider*>::const_iterator it2 = it->second->begin(); it2 != it->second->end(); ++it)
     {
       QDomElement* member = new QDomElement();
       member->setTagName(QString("Member"));
-      member->setNodeValue((*it2)->GetId().toString());
+      member->setNodeValue((*it2)->getId().toString());
       tour->appendChild(*member);
     }
     map->appendChild(*tour);
@@ -170,7 +182,7 @@ QDomElement* Manager::WriteMap() const
   return map;
 }
 
-void Manager::ReadMap(const QDomNode map)
+void Manager::readMap(const QDomNode map)
 {
   if (map.isNull())
   {
@@ -190,7 +202,7 @@ void Manager::ReadMap(const QDomNode map)
     {
       continue;
     }
-    const Tour* tour = GetTourById(QUuid(xTour.attribute(QString("id"))));
+    const Tour* tour = getTourById(QUuid(xTour.attribute(QString("id"))));
     if (NULL == tour)
     {
       continue;
@@ -201,7 +213,7 @@ void Manager::ReadMap(const QDomNode map)
     for(int j = 0; j < memCount; ++j)
     {
       QDomElement xMember = xMembers.at(j).toElement();
-      const Rider* rider = GetRiderById(QUuid(xMember.nodeValue()));
+      const Rider* rider = getRiderById(QUuid(xMember.nodeValue()));
       if (NULL == rider)
       {
         continue;
