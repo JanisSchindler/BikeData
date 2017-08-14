@@ -15,7 +15,11 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QListWidget" name="mListRiders"/>
+    <widget class="QListWidget" name="mListRiders">
+     <property name="sortingEnabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="mGrpData">

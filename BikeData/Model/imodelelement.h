@@ -8,6 +8,8 @@ class IModelElement
 public:
   IModelElement();
   QUuid getId() const;
+  // this is e.g. used by IdQWidgetListItem
+  virtual QString toString() const = 0 ;
   virtual ~IModelElement(){}
 
 protected:

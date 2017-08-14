@@ -21,6 +21,7 @@ public:
 
 protected:
   void closeEvent(QCloseEvent *bar);
+
 private:
   void init();
   Manager *mManager;

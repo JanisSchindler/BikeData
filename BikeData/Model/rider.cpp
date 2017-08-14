@@ -57,51 +57,69 @@ void Rider::loadFromXML(const QDomNode node)
   {
     return;
   }
-  QDomNode xNode = element.elementsByTagName(QString("ID")).item(0);
+  QDomNode xNode = element.elementsByTagName("ID").item(0);
   if (!xNode.isNull())
   {
-    mId = QUuid(xNode.nodeValue());
+    mId = QUuid(xNode.firstChild().nodeValue());
   }
-  xNode = element.elementsByTagName(QString("FirstName")).item(0);
+  xNode = element.elementsByTagName("FirstName").item(0);
   if (!xNode.isNull())
   {
-    mFirstName = xNode.nodeValue();
+    mFirstName = xNode.firstChild().nodeValue();
   }
-  xNode = element.elementsByTagName(QString("LastName")).item(0);
+  xNode = element.elementsByTagName("LastName").item(0);
   if (!xNode.isNull())
   {
-    mLastName = xNode.nodeValue();
+    mLastName = xNode.firstChild().nodeValue();
   }
-  xNode = element.elementsByTagName(QString("Birthdate")).item(0);
+  xNode = element.elementsByTagName("Birthdate").item(0);
   if (!xNode.isNull())
   {
-    mBirthdate = QDate::fromString(xNode.nodeValue()); // does this work?
+    mBirthdate = QDate::fromString(xNode.firstChild().nodeValue()); // does this work?
   }
 }
 
-QDomElement* Rider::writeToXML() const
+QString Rider::toString() const
 {
-  QDomElement* xID = new QDomElement();
-  xID->setTagName(QString("ID"));
-  xID->setNodeValue(mId.toString());
+  QString name;
+  if (!mLastName.isNull())
+  {
+    name = mLastName;
+  }
+  if (!mFirstName.isNull())
+  {
+    if (!name.isEmpty())
+    {
+      name = name + ", ";
+    }
+    name = name + mFirstName;
+  }
+  return name;
+}
 
-  QDomElement* xFirstName = new QDomElement();
-  xFirstName->setTagName(QString("FirstName"));
-  xFirstName->setNodeValue(mFirstName);
+QDomElement Rider::writeToXML(QDomDocument doc) const
+{
+  QDomElement xID = doc.createElement("ID");
+  QDomText text = doc.createTextNode(mId.toString());
+  xID.appendChild(text);
 
-  QDomElement* xLastName = new QDomElement();
-  xLastName->setTagName(QString("LastName"));
-  xLastName->setNodeValue(mLastName);
+  QDomElement xFirstName = doc.createElement("FirstName");
+  text = doc.createTextNode(mFirstName);
+  xFirstName.appendChild(text);
 
-  QDomElement* xBirthdate = new QDomElement();
-  xBirthdate->setTagName(QString("Birthdate"));
-  xBirthdate->setNodeValue(mBirthdate.toString());
+  QDomElement xLastName = doc.createElement("LastName");
+  text = doc.createTextNode(mLastName);
+  xLastName.appendChild(text);
 
-  QDomElement* data = new QDomElement();
-  data->setTagName(QString("Rider"));
-  data->appendChild(*xID);
-  data->appendChild(*xFirstName);
-  data->appendChild(*xLastName);
-  data->appendChild(*xBirthdate);
+  QDomElement xBirthdate =doc.createElement("Birthdate");
+  text = doc.createTextNode(mBirthdate.toString());
+  xBirthdate.appendChild(text);
+
+  QDomElement data = doc.createElement("Rider");
+  data.setTagName("Rider");
+  data.appendChild(xID);
+  data.appendChild(xFirstName);
+  data.appendChild(xLastName);
+  data.appendChild(xBirthdate);
   return data;
 }

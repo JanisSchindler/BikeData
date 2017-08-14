@@ -2,6 +2,7 @@
 #define MANAGER_H
 
 #include <QDomElement>
+#include <QObject>
 #include <QString>
 #include <QFile>
 #include <QTextStream>
@@ -11,8 +12,10 @@
 #include "tour.h"
 #include "rider.h"
 
-class Manager
+class Manager : public QObject
 {
+   Q_OBJECT
+
 public:
 
   Manager(const QString path);
@@ -25,8 +28,23 @@ public:
   std::vector<const Rider*>* getRidersForTour(const Tour* tour) const;
   std::vector<const Tour*>* getToursForRider(const Rider* rider) const;
 
+  void setRidersForTour(const QUuid tour, const std::vector<QUuid> riders);
+
   std::vector<const Tour*>* getTours() const;
   std::vector<const Rider*>* getRiders() const;
+
+  Rider* addRider();
+  Tour* addTour();
+
+  void deleteRider(QUuid id);
+  void deleteTour(QUuid id);
+
+  const Rider* getRiderById(QUuid id) const;
+  const Tour* getTourById(QUuid id) const;
+
+signals:
+  void ridersChanged();
+  void toursChanged();
 
 private:
   QString mPath;
@@ -34,10 +52,7 @@ private:
   std::vector<const Rider*>* mRiders;
   std::vector<const Tour*>* mTours;
 
-  const Rider* getRiderById(QUuid id) const;
-  const Tour* getTourById(QUuid id) const;
-
-  QDomElement* writeMap() const;
+  QDomElement writeMap(QDomDocument doc) const;
   void readMap(const QDomNode map);
 };
 

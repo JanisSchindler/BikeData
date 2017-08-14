@@ -2,6 +2,7 @@
 #define TOURS_H
 
 #include <QWidget>
+#include "idqwidgetlistitem.h"
 #include "Model/manager.h"
 #include "Model/tour.h"
 #include "Model/rider.h"
@@ -21,6 +22,15 @@ public:
 private:
   Manager *mManager;
   Ui::Tours *ui;
+  void initRiderList();
+  void setUi(const Tour* rider);
+  void setModel(Tour* tour);
+
+private slots:
+  void onCurrentRowChanged(int currentRow);
+  void onButtonOk();
+  void onButtonCancel();
+  void onRidersChanged();
 };
 
 #endif // TOURS_H

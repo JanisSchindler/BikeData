@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     Model/manager.cpp \
     Model/imodelelement.cpp \
     UI/riders.cpp \
-    UI/tours.cpp
+    UI/tours.cpp \
+    UI/idqwidgetlistitem.cpp \
+    Model/duration.cpp
 
 HEADERS  += mainwindow.h \
     Model/tour.h \
@@ -28,7 +30,9 @@ HEADERS  += mainwindow.h \
     Model/imodelelement.h \
     Model/manager.h \
     UI/riders.h \
-    UI/tours.h
+    UI/tours.h \
+    UI/idqwidgetlistitem.h \
+    Model/duration.h
 
 FORMS    += mainwindow.ui \
     riders.ui \

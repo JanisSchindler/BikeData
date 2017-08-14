@@ -2,7 +2,9 @@
 #define RIDERS_H
 
 #include <QWidget>
+#include "idqwidgetlistitem.h"
 #include "Model/manager.h"
+#include "Model/duration.h"
 
 namespace Ui {
   class Riders;
@@ -19,6 +21,14 @@ public:
 private:
   Manager *mManager;
   Ui::Riders *ui;  
+  void setUi(const Rider* rider);
+  void setModel(Rider* rider);
+
+private slots:
+  void onCurrentRowChanged(int currentRow);
+  void onButtonOk();
+  void onButtonCancel();
+  void onToursChanged();
 };
 
 #endif // RIDERS_H

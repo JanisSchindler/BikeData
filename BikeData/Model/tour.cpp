@@ -44,12 +44,12 @@ QDate Tour::getDate() const
   return mDate;
 }
 
-void Tour::setDuration(const QTime duration)
+void Tour::setDuration(const Duration duration)
 {
   mDuration = duration;
 }
 
-QTime Tour::getDuration() const
+Duration Tour::getDuration() const
 {
   return mDuration;
 }
@@ -60,10 +60,7 @@ float Tour::getAverageSpeed() const
   {
     return 0.0;
   }
-  int durMs = mDuration.elapsed();
-  // return in km / h
-  return mLength / (durMs / 1000.0 / 3600);
-
+  return mLength / (mDuration.secs() / 3600);
 }
 
 float Tour::getAverageRaise() const
@@ -74,7 +71,12 @@ float Tour::getAverageRaise() const
   }
   // return in %
   // 100 % == same distance up as forward
-  return mLength * 1000 / mHeight * 100;
+  return 100 * (mHeight / (mLength * 1000.0));
+}
+
+QString Tour::toString() const
+{
+  return mTitle;
 }
 
 void Tour::loadFromXML(const QDomNode node)
@@ -84,70 +86,71 @@ void Tour::loadFromXML(const QDomNode node)
   {
     return;
   }
-  QDomNode xNode = element.elementsByTagName(QString("ID")).item(0);
+  QDomNode xNode = element.elementsByTagName("ID").item(0);
   if (!xNode.isNull())
   {
-    mId = QUuid(xNode.nodeValue());
+    mId = QUuid(xNode.firstChild().nodeValue());
   }
-  xNode = element.elementsByTagName(QString("Title")).item(0);
+  xNode = element.elementsByTagName("Title").item(0);
   if (!xNode.isNull())
   {
-    mTitle = xNode.nodeValue();
+    mTitle = xNode.firstChild().nodeValue();
   }
-  xNode = element.elementsByTagName(QString("Length")).item(0);
+  xNode = element.elementsByTagName("Length").item(0);
   if (!xNode.isNull())
   {
-    mLength = xNode.nodeValue().toFloat();
+    mLength = xNode.firstChild().nodeValue().toFloat();
   }
-  xNode = element.elementsByTagName(QString("Height")).item(0);
+  xNode = element.elementsByTagName("Height").item(0);
   if (!xNode.isNull())
   {
-    mHeight = xNode.nodeValue().toInt();
+    mHeight = xNode.firstChild().nodeValue().toInt();
   }
-  xNode = element.elementsByTagName(QString("Date")).item(0);
+  xNode = element.elementsByTagName("Date").item(0);
   if (!xNode.isNull())
   {
-    mDate = QDate::fromString(xNode.nodeValue());
+    mDate = QDate::fromString(xNode.firstChild().nodeValue());
   }
-  xNode = element.elementsByTagName(QString("Duration")).item(0);
+  xNode = element.elementsByTagName("Duration").item(0);
   if (!xNode.isNull())
   {
-    mDuration = QTime::fromString(xNode.nodeValue());
+    mDuration = Duration(xNode.firstChild().nodeValue());
   }
 }
 
-QDomElement* Tour::writeToXML() const
+QDomElement Tour::writeToXML(QDomDocument doc) const
 {
-  QDomElement* xID = new QDomElement();
-  xID->setTagName(QString("ID"));
-  xID->setNodeValue(mId.toString());
+  QDomElement xID = doc.createElement("ID");
+  QDomText text = doc.createTextNode(mId.toString());
+  xID.appendChild(text);
 
-  QDomElement* xTitle = new QDomElement();
-  xTitle->setTagName(QString("Title"));
-  xTitle->setNodeValue(mTitle);
+  QDomElement xTitle = doc.createElement("Title");
+  text = doc.createTextNode(mTitle);
+  xTitle.appendChild(text);
 
-  QDomElement* xLen = new QDomElement();
-  xLen->setTagName(QString("Length"));
-  xLen->setNodeValue(QString::number(mLength));
+  QDomElement xLen = doc.createElement("Length");
+  text = doc.createTextNode(QString::number(mLength));
+  xLen.appendChild(text);
 
-  QDomElement* xHeight = new QDomElement();
-  xHeight->setTagName(QString("Height"));
-  xHeight->setNodeValue(QString::number(mHeight));
+  QDomElement xHeight = doc.createElement("Height");
+  text = doc.createTextNode(QString::number(mHeight));
+  xHeight.appendChild(text);
 
-  QDomElement* xDate = new QDomElement();
-  xDate->setTagName(QString("Date"));
-  xDate->setNodeValue(mDate.toString());
+  QDomElement xDate = doc.createElement("Date");
+  text = doc.createTextNode(mDate.toString());
+  xDate.appendChild(text);
 
-  QDomElement* xDuration = new QDomElement();
-  xDuration->setTagName(QString("Duration"));
-  xDuration->setNodeValue(mDuration.toString());
+  QDomElement xDuration = doc.createElement("Duration");
+  text = doc.createTextNode(mDuration.toString());
+  xDuration.appendChild(text);
 
-  QDomElement* data = new QDomElement();
-  data->setTagName("Tour");
-  data->appendChild(*xID);
-  data->appendChild(*xLen);
-  data->appendChild(*xHeight);
-  data->appendChild(*xDate);
-  data->appendChild(*xDuration);
+  QDomElement data = doc.createElement("Tour");
+  data.setTagName("Tour");  
+  data.appendChild(xID);
+  data.appendChild(xTitle);
+  data.appendChild(xLen);
+  data.appendChild(xHeight);
+  data.appendChild(xDate);
+  data.appendChild(xDuration);
   return data;
 }

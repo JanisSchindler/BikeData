@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QDate>
-#include <QTime>
+#include "duration.h"
 
 
 #include "imodelelement.h"
@@ -29,23 +29,25 @@ public:
   void setDate(const QDate date);
   QDate getDate() const;
 
-  void setDuration(const QTime duration);
-  QTime getDuration() const;
+  void setDuration(const Duration duration);
+  Duration getDuration() const;
 
   // calculated properties
   float getAverageSpeed() const;
   float getAverageRaise() const;
 
+  QString toString() const;
+
   // IPersistence
   void loadFromXML(const QDomNode node);
-  QDomElement* writeToXML() const;
+  QDomElement writeToXML(QDomDocument doc) const;
 
 private:
   QString mTitle;
   float mLength;
   float mHeight;
   QDate mDate;
-  QTime mDuration;
+  Duration mDuration;
 
 };
 

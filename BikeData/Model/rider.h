@@ -21,9 +21,11 @@ public:
   QDate getBirthdate() const;
   unsigned int getAge() const;
 
+  QString toString() const;
+
   // IPersistence
   void loadFromXML(const QDomNode node);
-  QDomElement* writeToXML()const;
+  QDomElement writeToXML(QDomDocument doc) const;
 
 private:
   QString mFirstName;
