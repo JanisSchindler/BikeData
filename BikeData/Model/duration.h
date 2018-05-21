@@ -23,6 +23,7 @@ private:
   bool mIsValid;
   long mSecs;
   int str2num(const QStringRef string);
+  static QChar sFiller;
 };
 
 #endif // DURATION_H

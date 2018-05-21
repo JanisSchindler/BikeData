@@ -1,5 +1,7 @@
 #include "duration.h"
 
+QChar Duration::sFiller = QChar('0');
+
 Duration::Duration()
 {
   mSecs = 0;
@@ -71,16 +73,18 @@ QString Duration::toString() const
   int remainder = mSecs - (days * 60*60*24);
   int hours = remainder / (60*60);
   remainder -= (hours * 60*60);
-  int mins =  remainder % 60;
+  int mins =  remainder / 60;
   // arg:
   // (number, fillWdith, base, fillChar) <-- fillChar has to be QChar else the overloading does not work
+  const int cFwidth = 2;
+  const int cBase = 10;
   if (days > 0)
   {
-    return QString("%L1:%L2:%L3").arg(days, 2, 10, QChar('0')).arg(hours, 2, 10, QChar('0')).arg(mins, 2, 10, QChar('0'));
+    return QString("%L1:%L2:%L3").arg(days, cFwidth, cBase, sFiller).arg(hours, cFwidth, cBase, sFiller).arg(mins, cFwidth, cBase, sFiller);
   }
   else
   {
-    return QString("%L1:%L2").arg(hours, 2, 10, QChar('0')).arg(mins, 2, 10, QChar('0'));
+    return QString("%L1:%L2").arg(hours, cFwidth, cBase, sFiller).arg(mins, cFwidth, cBase, sFiller);
   }
 }
 

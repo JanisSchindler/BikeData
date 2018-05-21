@@ -60,7 +60,7 @@ float Tour::getAverageSpeed() const
   {
     return 0.0;
   }
-  return mLength / (mDuration.secs() / 3600);
+  return mLength / ((float)mDuration.secs() / 3600.0f);
 }
 
 float Tour::getAverageRaise() const
